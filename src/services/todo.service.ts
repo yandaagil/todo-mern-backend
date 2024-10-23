@@ -26,3 +26,10 @@ export const deleteTodoById = async (id: string) => {
   const result = await todoModel.findOneAndDelete({ todo_id: id })
   return result
 }
+
+export const deleteSelectedTodos = async (ids: string[]) => {
+  const result = await todoModel.deleteMany({
+    todo_id: { $in: ids }
+  })
+  return result
+}
