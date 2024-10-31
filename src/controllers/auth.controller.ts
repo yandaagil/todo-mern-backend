@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { createUserValidation, createSessionValidation, refreshSessionValidation } from '../validations/auth.validation'
 import { v4 as uuidv4 } from 'uuid'
 import { checkPassword, hashing } from '../utils/hashing'
-import { createUser, findUserByUsername } from '../services/auth.service'
+import { createUser, findUserByEmail } from '../services/auth.service'
 import { signJWT, verifyJWT } from '../utils/jwt'
 
 export const registerUser = async (req: Request, res: Response) => {
@@ -35,7 +35,7 @@ export const createSession = async (req: Request, res: Response) => {
   }
 
   try {
-    const user: any = await findUserByUsername(value.username)
+    const user: any = await findUserByEmail(value.email)
     const isValid = checkPassword(value.password, user.password)
 
     if (!isValid) {
@@ -66,7 +66,7 @@ export const refreshSession = async (req: Request, res: Response) => {
   try {
     const { decoded } = verifyJWT(value.refreshToken)
 
-    const user = await findUserByUsername(decoded._doc.username)
+    const user = await findUserByEmail(decoded._doc.username)
     if (!user) return false
 
     const accessToken = signJWT({ ...user }, { expiresIn: '1d' })

@@ -5,6 +5,6 @@ export const createUser = async (payload: User) => {
   return await userModel.create(payload)
 }
 
-export const findUserByUsername = async (username: string) => {
-  return await userModel.findOne({ username })
+export const findUserByEmail = async (email: string) => {
+  return await userModel.findOne({ email })
 }

@@ -6,6 +6,7 @@ const deserializeToken = async (req: Request, res: Response, next: NextFunction)
   if (!accessToken) return next()
 
   const { decoded, expired } = verifyJWT(accessToken)
+
   if (decoded) {
     res.locals.user = decoded
     return next()

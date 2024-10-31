@@ -4,9 +4,9 @@ import { User } from '../types/user.type'
 export const createUserValidation = (payload: User) => {
   const schema = Joi.object({
     user_id: Joi.string().required(),
+    email: Joi.string().email().required(),
     name: Joi.string().allow('', null),
-    username: Joi.string().required(),
-    password: Joi.string().min(5).required()
+    image: Joi.string().allow('', null)
   })
 
   return schema.validate(payload)
@@ -14,8 +14,7 @@ export const createUserValidation = (payload: User) => {
 
 export const createSessionValidation = (payload: User) => {
   const schema = Joi.object({
-    username: Joi.string().required(),
-    password: Joi.string().min(5).required()
+    email: Joi.string().email().required()
   })
 
   return schema.validate(payload)

@@ -4,7 +4,7 @@ import { requireUser } from '../middleware/auth'
 
 export const TodoRouter: Router = Router()
 
-TodoRouter.get('/', getTodos)
-TodoRouter.post('/', createTodo)
-TodoRouter.put('/:id', updateTodo)
-TodoRouter.delete('/:id', deleteTodo)
+TodoRouter.get('/', requireUser, getTodos)
+TodoRouter.post('/', requireUser, createTodo)
+TodoRouter.put('/:id', requireUser, updateTodo)
+TodoRouter.delete('/:id', requireUser, deleteTodo)

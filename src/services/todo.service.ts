@@ -5,16 +5,22 @@ export const addTodoToDB = async (payload: Todo) => {
   return await todoModel.create(payload)
 }
 
-export const getTodosFromDB = async () => {
-  return await todoModel
-    .find()
-    .then((data) => {
-      return data
+export const getTodosFromDB = async (userId: string, search: string = '') => {
+  const result = await todoModel
+    .find({
+      user_id: userId,
+      todo: {
+        $regex: search,
+        $options: 'i'
+      }
     })
-    .catch((error) => {
-      console.info('Cannot get todos from DB')
-      console.error(error)
-    })
+    .sort({ date: 1 })
+  return result
+}
+
+export const getTodoById = async (id: string) => {
+  const result = await todoModel.findOne({ todo_id: id })
+  return result
 }
 
 export const updateTodoById = async (id: string, payload: Todo) => {
