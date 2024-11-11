@@ -7,6 +7,6 @@ export const hashing = (password: string): string => {
 }
 
 // decode
-export const checkPassword = (password: string, userPassword: string) => {
+export const checkPassword = (password: string, userPassword: string): boolean => {
   return bcrypt.compareSync(password, userPassword)
 }
